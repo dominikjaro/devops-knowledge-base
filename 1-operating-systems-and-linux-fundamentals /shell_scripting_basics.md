@@ -46,9 +46,59 @@ abbr _bash #!/bin/bash<CR>
 * List of all positional parameters individually: $@
 (All the positional parameters passed to the script as separate strings.)
 
+### Prompting for user input
+
+```bash
+read -p "Enter a username: " user_name
+read -sp "Enter a password: " user_password
+
+echo -e "\n$user_name "
+
+# The command `read` is used to read user input from the terminal. The `-p` option allows you to specify a prompt message, while the `-s` option hides the input (useful for passwords). The variables `user_name` and `user_password` will store the values entered by the user.
+```
+
+### Implementing Script logic
+
 ```bash
 #!/bin/bash
-echo "$1" # The first positional parameter
-echo "$#" # The number of positional parameters
-echo ""
+
+if [ $ -eq 0 ] ; then
+    read -p "Enter a username: " user_name
+    read -sp "Enter a password: " user_password
+    echo ""
+    read -sp "Enter the password again: " user_password_check
+    if [ "$user_password" != "$user_password_check" ] ; then
+        echo -e "\n${0}: Passwords do not match!"
+        exit 1
+    fi
+else
+    user_name="$1"
+    user_password="${2:-Password1}"
+fi
+echo -e "\n$user_name $user_password"
+```
+
+### Streamline Scripts Using Functions
+
+```bash
+#!/bin/bash
+
+prompt_user () {
+    read -p "Enter a username: " user_name
+    read -sp "Enter a password: " user_password
+    echo ""
+    read -sp "Enter the password again: " user_password_check
+    echo ""
+}
+if [ $ -eq 0 ] ; then
+    prompt_user
+    if [ "$user_password" != "$user_password_check" ] ; then
+        echo "${0}: Passwords do not match!"
+        prompt_user
+    fi
+else
+    user_name="$1"
+    user_password="${2:-Password1}"
+fi
+echo -e "\n$user_name $user_password"
 ```

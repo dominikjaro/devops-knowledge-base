@@ -53,3 +53,11 @@ Now, you will refactor the logic from option #2 in your menu to use functions an
 **Bonus / Stretch Goal:** Your sources mention that you can add a menu script to `~/.bash_profile` to ensure it runs on login, and that using `exec <path-to-script>` will ensure the user is logged out when they exit the menu. Once your script is working perfectly, try configuring a test environment so that this script runs immediately when you log in!
 
 Take your time scripting this out. Let me know if you want hints on syntax or if you want me to review your code once you are finished!
+
+---
+
+## ANSWERL: THE SCRIPT
+
+```bash
+
+```

@@ -87,7 +87,7 @@ while true ; do
     2) generate_users "test";;
     3) exit 0;;
     *) echo "Selection not recognized, please choose again";;
-    esac
-    read -n1 -p "Press any key to continue"
+  esac
+  read -n1 -p "Press any key to continue"
 done
 ```

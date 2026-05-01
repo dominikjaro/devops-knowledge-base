@@ -59,5 +59,35 @@ Take your time scripting this out. Let me know if you want hints on syntax or if
 ## ANSWERL: THE SCRIPT
 
 ```bash
+#!/bin/bash
+security_pin=123 #This is only in practice, in any dev or prod environment this value would be referenced from `.env` or secret.
 
+generate_users () {
+  for u in user{1..3} ; do
+    echo -e "Createing account: $1$u"
+  done
+}
+
+read -sp "Enter the security PIN: " security_pin_check
+
+while [ "$security_pin != "$security_pin_check" ] ; do
+  echo -e "\nPIN incorrect, try again!"
+  read -sp "Enter the security PIN:" security_pin_check
+done
+
+while true ; do
+  clear
+  echo "Choose 1, 2 or 3"
+  echo "1: View OS details"
+  echo "2: Generate Test Users"
+  echo "3: Quit"
+  read -sn1
+  case "$REPLY" in
+    1) hostname;;
+    2) generate_users "test";;
+    3) exit 0;;
+    *) echo "Selection not recognized, please choose again";;
+    esac
+    read -n1 -p "Press any key to continue"
+done
 ```

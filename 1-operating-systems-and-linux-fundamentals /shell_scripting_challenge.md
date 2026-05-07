@@ -56,7 +56,7 @@ Take your time scripting this out. Let me know if you want hints on syntax or if
 
 ---
 
-## ANSWERL: THE SCRIPT
+## ANSWER: THE SCRIPT
 
 ```bash
 #!/bin/bash

@@ -47,3 +47,52 @@ Refactor the Bulk Folder Generator (Option #3) to be a separate function.
 - **The mkdir safety:** Inside your function, use `mkdir -p`. This is "best practice" because the script won't crash if the folders already exist.
 
 - **Cleanliness:** Use the `clear` command at the start of your menu loop so the screen doesn't get cluttered with old text.
+
+---
+
+## ANSWER: THE SCRIPT
+
+```bash
+#!/bin/bash
+secret_keyword="devops2026" #For practices only, in any envrionment this value would be referenced from an .env file or secret
+project_name_suffixes=("config" "logs" "sources")
+
+search_logs () {
+  read -p "Enter search term (e.g. error, critical, sudo): " search_term
+  echo "Searching for '$search_term' in syslog..."
+  sudo grep -i "$search_term" /var/log/syslog | tail -n 10
+}
+
+make_folders () {
+  read -p "$1" project_name_prefix
+  for s in "${project_name_suffixes[@]}" ; do
+    echo "Created directory: ${project_name_prefix}_$s"
+    # mkdir -p "${project_name_prefix}_$s"
+  done
+}
+
+read -sp "Enter the Secret Keyword: " secret_keyword_check
+
+while [ "$secret_keword" != "$secret_keyword_check" ] ; do
+  echo -e "\nAccess Denied. Try again!"
+  read -sp "Enter the Secret Keyword: " secret_keyword_check
+done
+
+while true ; do
+  clear
+  echo "1: System CPU info"
+  echo "2: Search Logs"
+  echo "3: Bulk Folder Generator"
+  echo "4: Quit"
+  read -sn1 -p "Choose an option: "
+  case "$REPLY" in
+    1) lscpu ;;
+    2) search_logs ;;
+    3) make_folders "What os the project name? " ;;
+    4) echo -e "\nExiting..."; exit 0 ;;
+    *) echo -e "\nSelection not recognized." ;;
+  esac
+  echo ""
+  read -n1 -p "Press any key to continue"
+done
+```

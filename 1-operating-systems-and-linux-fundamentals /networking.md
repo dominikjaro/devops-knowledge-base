@@ -120,3 +120,28 @@ sudo timedatectl set-timezone <TIMEZONE> # Set the system timezone (e.g., "Europ
 systemctl status systemd-timesyncd # Check the status of the NTP client service
 sudo timedatectl set-ntp true # Enable the NTP client to synchronize the system clock with NTP servers
 ```
+
+* `timedatectl timesync-status` shows the current status of the system's time synchronization, including whether it is synchronized with an NTP server and the source of the time synchronization.
+* `timedatectl show-timesync` displays detailed information about the current time synchronization status
+* `sudo vim /etc/systemd/timesyncd.conf` allows you to edit the configuration file for systemd-timesyncd, where you can specify the NTP servers to be used for time synchronization.
+* `sudo timedatectl set-ntp false && sudo timedatectl set-ntp true` restarts the NTP client service to apply any changes made to the configuration file.
+
+---
+
+### Network Routing
+
+Routing: Delivery of packets from source to destination across multiple networks.
+
+* `ip` is a powerful command used to manage network interfaces, routing tables, and other network-related settings on Linux systems.
+  * `ip route` shows the current routing table, which contains information about how packets should be routed to different destinations based on their IP addresses.
+  * `ip route add` allows you to add a new route to the routing table, specifying the destination network, gateway, and other parameters.
+  * `ip route del` allows you to delete an existing route from the routing table.
+* `sysctl` is a command used to modify kernel parameters at runtime.
+* `netplan` to add persistent routes
+
+**Router:**
+Packet forwarding, or routing, is when a device (router) receives packets from other systems not destined for itself. Those packets are routed to the correct destination network.
+
+* `sysctl -ar ip_forward` shows the current value of the IP forwarding kernel parameter, which determines whether the system is allowed to forward packets between network interfaces.
+* We can store the settings in the `etc/sysctl.conf` or `/etc/sysctl.d/`
+* `sudo sysctl -p` applies the changes made to the sysctl configuration files.

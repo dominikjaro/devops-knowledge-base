@@ -145,3 +145,40 @@ Packet forwarding, or routing, is when a device (router) receives packets from o
 * `sysctl -ar ip_forward` shows the current value of the IP forwarding kernel parameter, which determines whether the system is allowed to forward packets between network interfaces.
 * We can store the settings in the `etc/sysctl.conf` or `/etc/sysctl.d/`
 * `sudo sysctl -p` applies the changes made to the sysctl configuration files.
+
+---
+
+### Configuring Firewalls using IPtables
+
+**Open Ports:** Having ports open on your system is the same as having doors and windows in a building.
+
+**Listening Ports:** Connecting to a service across the network requires the service to be started and listening on a port. The port can be managed via the TCP or UDP transport layer protocols. A good starting audit on any stsem is to list the TCP and UDP ports that are open. Installing a ports scanning tool such as nmap can be useful to list common ports found on internet system.
+
+* `ss -ntl` lists all TCP ports that are currently listening for incoming connections.
+* `ss -nlu` lists all UDP ports that are currently listening for incoming connections.
+* `ss -nltp` lists all TCP ports that are currently listening for incoming connections, along with the process ID and name of the service that is using each port.
+* `less /etc/services`
+* `sudo apt install -y nmap` port scanner
+* `nmap -v -vG -`
+* `nmap --top-port 10 -oG -` lists the top 10 most common ports and outputs the results in a grepable format.
+
+#### Firewall Rules Using NEtfliter Kernel Modules and Iptables
+
+The command iptables can be used to manage the host based netfilter firewall. These are kernel modules that are present by default but without active rules.
+
+* `sudo iptables -L` lists all the current firewall rules in the filter table, which is the default table used for managing network traffic.
+* `sudo apt list *.iptables*` lists all available iptables-related packages that can be installed on the system.
+
+**Setting Transient Rules:**  Firewall rules reside in memory. We allow our client IP address to SSH. Additionally, allow established and related connections as often we connect to different ports once a connection is made, also need to allow access from the localhost to all services. Rules are read in order with the DROP last.
+
+* `sudo iptables -A INPUT -p tcp -s <IP_ADDRESS> --dport 22 -j ACCEPT` allows incoming TCP traffic from the specified IP address to port 22 (SSH).
+* `sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT` allows incoming traffic that is part of an established connection or related to an existing
+* `sudo iptables -A INPUT -i lo -j ACCEPT` allows all incoming traffic on the loopback interface (localhost).
+* `sudo iptables _A INPUT -j DROP` drops all other incoming traffic that does not match the previous rules.
+* `sudo iptables -L` lists all the current firewall rules in the filter table, which is the default table used for managing network traffic.
+
+**Setting Persistent Rules:** the rules should be stored in the file `/etc/iptables/rules.v4` to be accessed by the service unit.
+
+* `sudo iptables -Z && sudo iptables-save -f /etc/iptables/rules.v4` saves the current firewall rules to the specified file, allowing them to be loaded automatically on system startup.
+* `sudo iptables -F` flushes all existing firewall rules from the current configuration, effectively resetting the firewall to its default state.
+* `sudo iptables-restore /etc/iptables/rules.v4` restores the firewall rules from the specified file, applying them to the current configuration.

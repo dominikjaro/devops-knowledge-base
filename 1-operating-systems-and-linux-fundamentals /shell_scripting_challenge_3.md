@@ -54,5 +54,44 @@ This is the most important part. You will build a function that "packages" a fol
 ## ANSWER: Script
 
 ```bash
+#!/bin/bash
 
+ping -c 1 8.8.8.8 > /dev/null 2>&1
+
+if [ $? -eq 0 ]; then
+    echo "Network: ONLINE"
+else
+    echo "Network: OFFLINE"
+fi
+
+sleep 2;
+
+backup_project() {
+  timestamp=$(date +%Y-%m-%d_%H-%M-%S)
+  read -p "Which directory do you want to backup? " dir_name
+  if [ ! -d "$dir_name" ]; then
+    echo "Error: Directory $dir_name does not exist."
+    return 1
+  fi
+  echo "Directory found! Starting tar compression..."
+  sleep 1;
+  tar -czf "backup_${dir_name}_${timestamp}.tar.gz" --one-file-system ${dir_name}
+}
+
+while true; do
+    echo "1) Network Map"
+    echo "2) Project Backup"
+    echo "3) Process Watcher"
+    echo "4) Quit"
+    read -sn1 -p "Choose an option: "
+    case "$REPLY" in
+        1) echo "" && ip addr && ss -tulpn ;;
+        2) backup_project ;;
+        3) echo "" && read -p "Enter process name: " proc_name &&  ps aux | grep -i "$proc_name" ;;
+        4) echo "Exiting..." && exit 0 ;;
+        *) echo "Invalid option, try again." ;;
+    esac
+    echo ""
+    read -n1 -p "Press any key to continue..."
+done
 ```

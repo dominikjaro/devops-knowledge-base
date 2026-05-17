@@ -37,3 +37,8 @@
 * `cat /etc/resolv.conf` can be used to view the current DNS resolver configuration on a Linux system.
 * `resolvconf` is a utility that manages the DNS resolver configuration on a Linux system.
 * `dig` is a command-line tool used to query DNS servers and retrieve information about domain
+* `resolvectl` is a command-line tool used to manage the DNS resolver configuration on a Linux system.
+
+---
+
+## Configuring Email Servers

@@ -81,6 +81,12 @@ Hidden files (starts with a dot)
 * `top` = show real time system resource usage
 * `lsblk` = show block devices (disks, partitions, etc)
 * `mount` = show mounted file systems
+* `ln -sf <target> <link-name>` = create symbolic link to target file or dir with link name
+* `!<cmd>` = run previous cmd that starts with <cmd> (e.g. !d to run previous cmd that starts with d)
+* `!!` = run previous cmd
+* `!$` = run last argument of previous cmd
+* `!^` = run first argument of previous cmd
+* `!!:p` = print previous cmd without running it
 
 ### Package manager: APT
 

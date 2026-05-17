@@ -87,6 +87,8 @@ Hidden files (starts with a dot)
 * `!$` = run last argument of previous cmd
 * `!^` = run first argument of previous cmd
 * `!!:p` = print previous cmd without running it
+* `esc + k` = search through previous cmd in terminal (press multiple times to keep searching)
+* `esc + .` = insert last argument of previous cmd into current cmd (press multiple times to cycle through last arguments of previous cmds)
 
 ### Package manager: APT
 

@@ -42,3 +42,7 @@
 ---
 
 ## Configuring Email Servers
+
+* `MTA` (Mail Transfer Agent) is software that is responsible for sending and receiving email messages.
+  * Postfix -- a popular MTA that is used to send and receive email messages.
+  * Simple mail client (e.g. `mail` command) can be used to send email messages from the command line.

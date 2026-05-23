@@ -40,3 +40,36 @@
 * `git stash clear` - Clear all stashed changes, which removes them from the stash and cannot be recovered.
 
 * `git add --patch <file>` - Interactively stage changes in a file, allowing you to choose which changes to stage. (moving specific changes from the working directory to the index)
+
+#### History
+
+* `git log` - Show the commit history, which displays a list of commits in the repository.
+* `git log --graph --decorate --oneline` - Show a graphical representation of the commit history, which can help visualize branches and merges.
+* `git show <commit_hash>` - Show details of a specific commit, including changes made and commit message.
+* `git show <branch_name>` - Show details of the latest commit on a specific branch.
+* `git show HEAD` - Show details of the latest commit on the current branch.
+* `git show HEAD^` - Show details of the commit before the latest commit on the current branch.
+* `git show HEAD^^` - Show details of the commit two commits before the latest commit on the current branch.
+* `git show HEAD~3` - Show details of the commit three commits before the latest.
+* `git show HEAD@{"1 month ago"}` - Show details of the commit from one month ago on the current branch.
+
+* `git blame <file>` - Show who made changes to each line of a file, which can help identify the author of specific changes.
+* `git diff HEAD~3 HEAD` - Show the differences between the current state of the repository and the state three commits ago, which can help identify changes made over a specific period of time.
+* `git diff <branch_1> <branch_2>` - Show the differences between two branches, which can help identify changes made in one branch compared to another.
+
+---
+
+#### Submodules
+
+* Think of a submoduile as a pointer to another project's commit.
+* Submodules don't change unless you ask them to.
+* If submodules become a chore, look for more powerful Git commands e.g. `git submodule update --remote --recursive` to update all submodules to the latest commit on their respective branches.
+
+---
+
+#### LFS (Large File Storage)
+
+* Git LFS is an extension to Git that allows you to manage large files more efficiently by storing them outside of the main repository.
+
+**Consider LFS if...**
+    your binary files tend to stay in the repository, but no in the working area.

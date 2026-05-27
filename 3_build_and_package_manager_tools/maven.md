@@ -51,3 +51,115 @@ By default maven looks for `src/main/java` directory underneath the project and 
 * **~/.m2/repository** - This is the local repository where maven stores downloaded dependencies and installed artifacts. When you run `mvn install`, the jar file will be copied to this directory. When you run `mvn package`, the jar file will be created in the target directory, but it will not be copied to the local repository until you run `mvn install`.
 
 Everything goes with the groupID, arrifactID, and version. This is how maven identifies dependencies and artifacts. When you run `mvn install`, maven will look for the jar file in the target directory and copy it to the local repository with the appropriate group ID, artifact ID, and version.
+
+---
+
+### Maven Dependencies
+
+* Just list what you need and maven will take care of the rest. It will download the dependencies and add them to your project.
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.12.0</version>
+    </dependency>
+</dependencies>
+```
+
+#### Packaging Types
+
+* **jar** - This is the default packaging type. It creates a jar file.
+* **war** - This packaging type is used for web applications. It creates a war file.
+* **pom** - This packaging type is used for projects that are not meant to be packaged. It is used for projects that are meant to be used as dependencies in other projects. It does not create a jar file.
+* **ear** - This packaging type is used for enterprise applications. It creates an ear file.
+* **maven-plugin** - This packaging type is used for maven plugins. It creates a jar file that can be used as a maven plugin.
+
+#### Versions
+
+* **SNAPSHOT** - This is a development version. It is not stable and can change at any time. It is usually used for testing and development purposes. It is not recommended to use SNAPSHOT versions in production.
+* **Release** - This is a stable version. It is recommended to use release versions in production. It is usually used for production purposes.
+* **Final** - This is a stable version. It is recommended to use final versions in production. It is usually used for production purposes.
+
+
+#### Scopes
+
+* **compile** - This is the default scope. It means that the dependency is available in all classpaths of the project. It is also included in the final artifact.
+* **provided** - This scope means that the dependency is provided by the runtime environment. It is available in the compile and test classpaths, but it is not included in the final artifact.
+* **runtime** - This scope means that the dependency is not needed for compilation, but it is needed for execution. It is available in the runtime and test classpaths, but it is not included in the final artifact.
+
+---
+
+### Maven Repositories
+
+* **Central Repository** - This is the default repository that maven uses to download dependencies. It is a public repository that contains a large number of artifacts.
+* **Local Repository** - This is the repository that maven uses to store downloaded dependencies and installed artifacts. It is located in the `~/.m2/repository` directory on your machine by default.
+* **Remote Repository** - This is a repository that is hosted on a remote server. It can be a public repository or a private repository. You can configure maven to use remote repositories by adding them to the `pom.xml` file.
+
+```xml
+<repositories>
+    <repository>
+        <id>spring-snapshot</id>
+        <url>https://repo.spring.io/libs-snapshot</url>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+        <releases>
+            <enabled>false</enabled>
+        </releases>
+    </repository>
+</repositories>
+```
+
+---
+
+### Maven Plugins
+
+**Phases:**
+
+* **validate** - This phase validates the project structure and configuration.
+* **compile** - This phase compiles the source code of the project.
+* **test** - This phase runs the tests of the project.
+* **package** - This phase packages the compiled code into a jar file.
+* **integration-test** - This phase runs the integration tests of the project.
+* **verify** - This phase runs any checks to verify the package is valid and meets quality criteria.
+* **install** - This phase installs the jar file into the local repository.
+* **deploy** - This phase deploys the jar file to a remote repository.
+
+The **goals** is what we type at the command line and the **phase** is what maven executes. When you run `mvn package`, maven will execute all the phases up to and including the package phase. This means that it will execute the validate, compile, test, and package phases.
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+            <configuration>
+              <release>17</release>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```
+
+---
+
+### BOM (Bill of Materials)
+
+This is a special type of pom file that is used to manage the versions of dependencies. It is used to ensure that all dependencies in a project are compatible with each other. It is usually used in large projects with many dependencies.
+
+```xml
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>2.5.4</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+```

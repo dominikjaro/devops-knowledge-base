@@ -87,6 +87,7 @@ COPY --from=build /app/build /usr/share/nginx/html
 ```
 
 4. Don't run as root user in the container. Create a non-root user and switch to that user in the Dockerfile to improve security.
+
 ```Dockerfile
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 USER appuser

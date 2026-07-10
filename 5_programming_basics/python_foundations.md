@@ -32,3 +32,31 @@ if temperature < 80 and forecast != "rainy":
 else:
     print("Stay inside!")
 ```
+
+### Modules
+
+It is like a toolbox that contains a set of functions and variables that can be used in your program. You can import a module using the `import` statement.
+For the Python standard library see: https://docs.python.org/3/library/
+
+```python
+# Rock, Paper, Scissors game
+
+import random
+
+computer_choice = random.choice(["rock", "paper", "scissor"])
+user_choice = input("Do you want rock, paper or scissor? ")
+
+print("\nComputer chose: " + computer_choice)
+
+if computer_choice == user_choice:
+    print("TIE")
+elif user_choice == "rock" and computer_choice == "scissor":
+    
+    print("You WIN")
+elif user_choice == "paper" and computer_choice == "rock":
+    print("You WIN")
+elif user_choice == "scissor" and computer_choice == "paper":
+    print("You WIN")
+else:
+    print("You lose, computer wins")
+```
